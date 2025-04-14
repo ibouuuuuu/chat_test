@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat avec Bot</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #1e1e1e;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    #chat-box {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .message {
+      padding: 10px;
+      border-radius: 8px;
+      max-width: 60%;
+    }
+
+    .user {
+      background-color: #3a3a3a;
+      align-self: flex-end;
+    }
+
+    .bot {
+      background-color: #2a7b9b;
+      align-self: flex-start;
+    }
+
+    #chat-form {
+      display: flex;
+      padding: 10px;
+      background: #111;
+    }
+
+    #message-input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    #chat-form button {
+      padding: 10px;
+      margin-left: 10px;
+      font-size: 16px;
+      border: none;
+      background-color: #2a7b9b;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="chat-box"></div>
+
+  <form id="chat-form">
+    <input type="text" id="message-input" placeholder="Écris un message..." required>
+    <button type="submit">Envoyer</button>
+  </form>
+
+  <script>
+    const pseudo = localStorage.getItem("pseudo") || "Moi";
+    const chatBox = document.getElementById("chat-box");
+    const form = document.getElementById("chat-form");
+    const input = document.getElementById("message-input");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const msg = input.value.trim();
+      if (msg === "") return;
+
+      // Afficher message utilisateur
+      const userMsg = document.createElement("div");
+      userMsg.classList.add("message", "user");
+      userMsg.textContent = `${pseudo}: ${msg}`;
+      chatBox.appendChild(userMsg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      input.value = "";
+
+      // Réponse du bot après 2 secondes
+      setTimeout(() => {
+        const botReplies = [
+          "Salut ! Tu veux discuter ?",
+          "Je suis un bot, mais sympa !",
+          "Trop cool de te voir ici 😎",
+          "Pose-moi une question !",
+        ];
+        const randomMsg = botReplies[Math.floor(Math.random() * botReplies.length)];
+
+        const botMsg = document.createElement("div");
+        botMsg.classList.add("message", "bot");
+        botMsg.textContent = `🤖 Bot: ${randomMsg}`;
+        chatBox.appendChild(botMsg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 2000);
+    });
+  </script>
+
+</body>
+</html>
