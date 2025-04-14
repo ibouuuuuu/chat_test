@@ -60,12 +60,6 @@ fetch("/api/gpt", {
     saveMessage("bot", reply);
     chatBox.scrollTop = chatBox.scrollHeight;
   })
-  .catch(err => {
-    const errorMsg = createMessageElement("bot", "Erreur de connexion avec le bot 🤖❌");
-    chatBox.appendChild(errorMsg);
-    saveMessage("bot", "Erreur de connexion avec le bot 🤖❌");
-    chatBox.scrollTop = chatBox.scrollHeight;
-  });
 
   }
 });
